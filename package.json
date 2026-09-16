@@ -1,0 +1,15 @@
+{
+  "name": "glasshouse-heist-prototype",
+  "version": "0.3.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "build:vercel": "node build-vercel.mjs",
+    "test": "node test-physics.mjs && node test-heist.mjs && node test-controls.mjs"
+  },
+  "dependencies": {
+    "esbuild": "0.25.0",
+    "three": "0.160.1"
+  }
+}
