@@ -29,7 +29,7 @@ for(let x=-15;x<=15;x+=5){cube('stone',x,3.9,-14.6,.7,7.8,.65);cube('stone',x,7.
 for(const x of [-15.6,15.6])for(let z=-10;z<=10;z+=5){cyl('stone',x,2.1,z,.35,4.2);cyl('brass',x,4.05,z,.55,.2);}
 // Small inner railings, kept off route entrances.
 function rail(x,z,len,axis='z',y=4.4){const dx=axis==='x'?len:0,dz=axis==='z'?len:0;rod([x-dx/2,y+.9,z-dz/2],[x+dx/2,y+.9,z+dz/2],.045,'brass');for(let t=-.5;t<=.51;t+=1/Math.max(2,Math.floor(len/.9)))rod([x+dx*t,y,z+dz*t],[x+dx*t,y+.9,z+dz*t],.027,'stone');}
-rail(12,-8,4);rail(12,5,9);rail(-12,5,9);rail(-12,-10,3);rail(3,-10,6,'x');
+rail(12,-8,4);rail(12,5,9);rail(-12,-1,4);rail(-12,-10,3);rail(3,-10,6,'x');
 // Overhead ribs leave the playable route clear; no opaque roof to hide camera.
 for(const z of [-14,-7,0,7,14]){let pts=[];for(let i=0;i<=28;i++){const a=i/28*Math.PI;pts.push(new T.Vector3(Math.cos(a)*17,9+Math.sin(a)*5,z));}const curve=new T.CatmullRomCurve3(pts);scene.add(new T.Mesh(new T.TubeGeometry(curve,32,.07,5,false),mats.brass));}
 for(const x of [-12,-6,0,6,12])rod([x,9+Math.sqrt(1-(x/17)**2)*5,-14],[x,9+Math.sqrt(1-(x/17)**2)*5,14],.045,'glassFrame');
@@ -38,7 +38,7 @@ for(const x of [-12,-6,6,12]){cube('wine',x,6.6,-14.35,1.6,2.4,.08);rod([x-.95,7
 // Scaffold geometry emphasizes real staggered landings.
 for(const b of platforms.filter(b=>b.kind==='wood')){for(const sx of [-1,1])for(const sz of [-1,1])rod([b.x+sx*b.w*.46,0,b.z+sz*b.d*.46],[b.x+sx*b.w*.46,b.top+.7,b.z+sz*b.d*.46],.055,'glassFrame');rod([b.x-b.w*.46,b.top-1.1,b.z-b.d*.46],[b.x+b.w*.46,b.top,b.z-b.d*.46],.035,'brass');}
 function plant(x,y,z,s=1){cyl('wine',x,y+.3*s,z,.36*s,.6*s);for(let i=0;i<5;i++){let a=i*2.4;const leaf=ball(i%2?'green':'leaf',x+Math.sin(a)*.29*s,y+(.7+i*.055)*s,z+Math.cos(a)*.29*s,.18*s,.65*s,.15*s);leaf.rotation.z=Math.sin(a)*.65;leaf.rotation.x=Math.cos(a)*.65;}}
-for(const a of [[12.8,4.4,3],[-14,4.4,6],[10,4.4,-2],[-5,4.4,-12],[10,4.4,-12],[-12.5,4.4,-11],[14,4.4,10],[-14,4.4,11]])plant(...a,1.3);
+for(const a of [[12.8,4.4,3],[-15.3,4.4,-4],[10,4.4,-2],[-5,4.4,-12],[10,4.4,-12],[-12.5,4.4,-11],[14,4.4,10],[-15.3,0,11]])plant(...a,1.3);
 // Botanical court and sculptural tree; furniture is visual-only in this study.
 cyl('stone',0,.22,2,2.1,.44);cyl('green',0,.45,2,1.85,.12);rod([0,.5,2],[.2,3.3,2],.18,'bark');for(let i=0;i<7;i++){let a=i*2.4;const x=Math.cos(a)*(i%2?1.3:.8),z=2+Math.sin(a)*1.2;rod([.1,2,2],[x,3.1+i*.14,z],.07,'bark');ball(i%2?'leaf':'green',x,3.1+i*.14,z,.9,.55,.9);}
 // Static crowd silhouettes at readable human scale, intentionally not AI NPCs.
@@ -51,10 +51,18 @@ cyl('dark',3,5,-7.9,.6,1.2);const glass=new T.MeshBasicMaterial({color:'#a2d9dc'
 // City silhouettes give the skylight a metropolitan context.
 for(let i=0;i<18;i++){const x=-38+i*4.4,h=7+(i*13%11);cube(i%2?'dark':'navy',x,h/2,-27,3.5,h,5);for(let y=2;y<h-1;y+=3)cube('brass',x,y,-24.45,.55,.85,.02);}
 // Brass breadcrumb inlays: a guide, not a prescribed final level route.
-const breadcrumbs=[[7,0,10],[7,.8,7.7],[7,2,5.2],[7,3.2,2.8],[7,4.4,0],[10,4.4,-2],[14,4.4,-5],[14,4.4,-8],[11,4.4,-12],[7,4.4,-12],[2,4.4,-12],[-3,4.4,-12],[-8,4.4,-12],[-14,4.4,-10],[-14,4.4,-6],[-11,4.4,-6]];
+const breadcrumbs=[[7,0,10],[7,.8,7.7],[7,2,5.2],[7,3.2,2.8],[7,4.4,0],[10,4.4,-2],[10,4.4,-5],[10,4.4,-8],[8,4.4,-9],[6.9,4.4,-9],[3,4.4,-12],[-3,4.4,-12],[-8,4.4,-12],[-14,4.4,-10],[-14,4.4,-6],[-11,4.4,-6]];
 for(const [x,y,z]of breadcrumbs)cyl('gold',x,y+.025,z,.13,.03);
 function placard(text,x,y,z,w=3){const c=document.createElement('canvas');c.width=512;c.height=100;const ctx=c.getContext('2d');ctx.fillStyle='#20333b';ctx.fillRect(0,0,512,100);ctx.strokeStyle='#bca370';ctx.strokeRect(4,4,504,92);ctx.fillStyle='#f4dfb9';ctx.font='500 27px sans-serif';ctx.textAlign='center';ctx.fillText(text,256,60);const tx=new T.CanvasTexture(c);const sp=new T.Sprite(new T.SpriteMaterial({map:tx,depthTest:true}));sp.position.set(x,y,z);sp.scale.set(w,w*.195,1);scene.add(sp);}
-placard('PLANTED TERRACE',13,6.9,-2,3.2);placard('ROOF ACCESS',-4,11.1,1.5,3);placard('TETHER ANCHOR',1,11,-11,3);placard('RESTORATION ACCESS',-11,6.1,-6,3);
+placard('GALLERY / OBSERVE FIRST',7,6.9,-2,3.6);placard('ROOF ACCESS',-4,11.1,1.5,3);placard('TETHER ANCHOR',1,11,-11,3);placard('RESTORATION ACCESS',-11,6.1,-6,3);
+// Sparse details make circulation and restricted spaces legible, not more ornate.
+placard('SERVICE / ROOF ACCESS',-13.5,2.5,12,3.4);
+placard('CATALOGUE READING',-9,2.3,9,2.8);
+placard('INNER ARCADE',10,6.4,-5,2.6);
+for(const z of [11.5,9,6.5,4])cyl('brass',-14,.035+(11.5-z)/7.5*4.4,z,.1,.03);
+for(const z of [-5,-3,-1]){rod([-6.45,0,z],[-6.45,9.2,z],.045,'brass');}
+// Framed, quiet display alcoves behind the gallery screens.
+for(const z of [-5,-8]){cube('brass',12.01,5.6,z,.035,1.2,1);cube('wine',11.98,5.6,z,.035,1,.8);}
 // Batch static surfaces by material. Preserve detached collision meshes for camera rays.
 scene.updateMatrixWorld(true);
 const batches=new Map(), staticMeshes=[];

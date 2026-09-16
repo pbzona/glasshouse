@@ -8,8 +8,8 @@ box('stair-landing',7,-1.3,4,3.2,4.4);
 box('terrace-connection',10,-2,8,3,4.4,'garden');
 box('east-gallery',14,-1,4,26,4.4,'garden');
 box('north-gallery',0,-12,28,4,4.4);
-box('west-gallery',-14,-1,4,26,4.4,'garden');
-box('exhibition',3,-7.9,7,4.5,4.4);
+box('west-gallery',-14,-6,4,16,4.4,'garden');
+box('exhibition',4,-7.9,10,4.5,4.4);
 box('exhibition-link',3,-10,4,2,4.4);
 box('scaffold-base',-10,-6,4,4,4.4,'wood');
 box('scaffold-one',-8,-3.5,3,2.6,5.5,'wood');
@@ -19,6 +19,22 @@ box('scaffold-four',-4,1.5,3,3,8.8,'wood');
 box('beam-one',-4,-3,1.8,6,8.8,'beam');
 box('beam-two',-4,-8,1.8,1.4,8.8,'beam');
 box('roof-deck',0,-11,10,4,8.8,'roof');
+// Public gallery: an inner arcade separated from the guards' outer patrol walk.
+box('east-arcade',10,-6,4,8,4.4,'garden');
+box('north-arcade',7,-9,10,2,4.4,'stone');
+// Independent service-side roof access, reached directly from the gala floor.
+for(let i=0;i<11;i++)box('service-stair-'+i,-14,10-i*.75,2.8,.79,(i+1)*.4,'stair',.4);
+box('service-landing',-14,1.7,3,3,4.4,'wood');
+export const architecturalCover=[
+ {id:'east-screen',x:12.25,z:-7,w:.4,d:7.8,top:6.7,h:2.3,kind:'stone'},
+ {id:'east-display-wall',x:8.6,z:-6.1,w:.35,d:4,top:6.7,h:2.3,kind:'stone'},
+ {id:'north-screen',x:8,z:-10.05,w:8.1,d:.3,top:6.7,h:2.3,kind:'stone'},
+ {id:'service-partition',x:-11.8,z:6.2,w:.4,d:10.4,top:3.7,h:3.7,kind:'dark'},
+ {id:'restoration-screen',x:-6.2,z:-3.7,w:.35,d:7.4,top:9.2,h:9.2,kind:'wine'},
+ {id:'case-waiting-cover',x:5.85,z:-8,w:.85,d:2.2,top:6.4,h:2,kind:'crate'}
+];
+platforms.push(...architecturalCover);
+export const RECON_POINTS=[{x:7,y:4.4,z:-2},{x:-9,y:0,z:12}];
 export const securityGate={id:'security-gate',x:3,z:-10.42,w:4.4,d:.32,top:6.7,h:2.3,kind:'gate',disabled:false};
 export const coverBlocks=[
  {id:'east-cover',x:13,z:1.5,w:1.5,d:1.25,top:6,h:1.6,kind:'crate'},
