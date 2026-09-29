@@ -2,7 +2,7 @@
 
 An original browser-based museum heist platformer: an agile weasel, a crowded gala, optional preparation, and a prize worth climbing for.
 
-**Status:** early playable prototype, readability and atmosphere pass 0.5.0. The full recon–prepare–steal–escape loop is implemented. Art, animation, crowd behavior, and performance are still being refined.
+**Status:** early playable prototype, character and gala pass 0.6.0. The full recon–prepare–steal–escape loop is implemented. Art, animation, crowd behavior, and performance are still being refined.
 
 [Play the live build](https://glasshouse-silk.vercel.app)
 
@@ -22,7 +22,7 @@ The game is a client-only WebGL application. Its production build is one self-co
 | R | Regroup at the last safe point |
 | Escape | Pause |
 
-Release E between different actions. Camera follow can be disabled in Pause. The menu also offers brighter lighting, simple sound cues, and rendering-resolution choices.
+Release E between different actions. Camera follow can be disabled in Pause. The menu also offers brighter lighting, footstep/sound volume on/off, and rendering-resolution choices. Sound starts quietly after the explicit Take the job click; it can be muted in Pause.
 
 ## The heist
 
@@ -45,7 +45,17 @@ Warm ivory stone, burgundy panels and brass trim now carry muted botanical accen
 - The curator no longer overlaps a decorative guest. Their head/catalogue poses, text states and look-up warning make the unchanged reading cycle clearer.
 - Stair markers are snapped to real authored surfaces. Gold indicates the prize approach; green marks optional service/roof access.
 - Recovery names the destination and shows remaining grace seconds. Prep and loot retention rules are unchanged.
-- Two existing gala guests make small conversational gestures. There is no crowd simulation or moving collision.
+- Six purposeful, non-colliding gala actors replace earlier static silhouettes: a tray-carrying server on a short table circuit, conversing guests, an admirer, photographer, and a glancing patron. There is no free-form crowd navigation.
+
+## Character and gala pass
+
+The original weasel now has bespoke lofted forms, an articulated continuous tapered tail, a muzzle and expressive face, plum jacket, gloves, boots and a cross-body satchel. A visual-only hierarchical rig blends walk/run/sneak, airborne/landing, ledge pull-up, tether hang, pickpocket reach, prize lift/stash, and protective loot-carrying poses. Inputs, movement physics, map, detection and mission rules are unchanged. The rig is procedural, not a downloaded or hand-sculpted production asset; reaching is local-space rather than full environment-contact IK.
+
+The server follows a deterministic table circuit with pauses. Guests chat, toast, examine art and raise a camera. Nearby civilians glance at equipment disruptions; after theft, conversations pause and people turn toward the emptied display. Ambient subtitles are local and sparse, with mission dialogue taking priority. Security has walking, visor-check and radio gestures. These activities do not create mandatory timing puzzles or block routes.
+
+The prize remains silent. There is **no singing-bird sequence**, no new gadget, and no forced chase. The thief stashes the loot; the existing display/security response and the gala's reactions provide the payoff.
+
+Lighting now emphasizes the warm prize and inhabited gala against cooler service circulation. Architecture uses static spatial vertex lighting; characters receive matching live fill/key/rim and localized prize light. No additional shadow-map or full-screen postprocessing passes are required.
 
 ## Development
 
@@ -88,16 +98,20 @@ npm run build:vercel
 - `src/finishings.js` — atlas signage, botanical panels, material details and grounded inlays
 - `src/readability.js` — refuge, marker, curator cue and checkpoint presentation helpers
 - `src/visibility.js` — reusable sampled visibility overlay buffers
+- `src/thief.js` — bespoke weasel rig, animation blending and pose events
+- `src/gala.js` — authored social schedules, gestures and localized reactions
+- `src/lighting.js` — spatial static-light bake and matching actor lights
 - `index.template.html` — shared base styles (its legacy body is not used by the build)
 - `heist.body.html`, `heist.extra.css` — current game interface
 - `build.mjs`, `build-vercel.mjs` — bundling and hosting output
 - `test-physics.mjs`, `test-heist.mjs`, `test-controls.mjs`, `test-layout.mjs` — traversal, 25 mission tests, 11 control tests and multi-phase stealth/layout regressions
 - `test-visibility.mjs`, `test-readability.mjs`, `test-scene.mjs` — 17 visibility checks, 6 readability checks and a headless geometry-construction budget smoke test
+- `test-thief.mjs`, `test-gala.mjs`, `test-lighting.mjs` — rig topology, animation/root invariance, pause/reset, civilian route clearance, reactions and light hierarchy
 
 ## Current limitations
 
-This is not final art or a polished chapter. Most guests are static; two have restrained gestures and the curator has readable look/read poses. Guards investigate on authored surfaces rather than performing full navigation/pursuit, and decorative props are not all collidable. There are no mobile controls, gamepad support, persistent saves, or production soundtrack.
+This is not final art or a polished chapter. Civilian life uses short authored loops rather than an unrestricted social simulation. The character remains a procedural rig, and the curator uses its existing timed opportunity. Guards investigate on authored surfaces rather than performing full navigation/pursuit, and decorative props are not all collidable. There are no mobile controls, gamepad support, persistent saves, or production soundtrack.
 
-Rendering remains a known issue. At a matching 1280×1280 viewport, 50% render scale and initial position, three pre-pass samples measured 24.1–25.1 fps and three post-pass samples measured 24.1–26.0 fps. Visible draw calls fell from 57 to 51 at that position. No material regression was observed in those samples, but this is not a 60 fps claim or a guaranteed hardware rate. The new live build also passed a covered-gallery check and a pickpocket → service roof → theft → roof escape run with zero captures and zero scrambler uses.
+Rendering remains a known issue. A same-session pre-pass baseline at the initial position, 1280×1280 viewport and 50% render scale was approximately 16–17 fps. It must be compared with this pass under matching conditions; measurements from other remote browser sessions are not hardware benchmarks or a 60 fps guarantee.
 
 Third-party license notices are retained under `licenses/`. No license for the original game code or assets has been assigned here.

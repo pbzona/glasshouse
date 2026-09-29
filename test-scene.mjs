@@ -11,4 +11,4 @@ const result=await build({entryPoints:[root+'src/main.js'],bundle:true,write:fal
 try{await import('data:text/javascript;base64,'+Buffer.from(result.outputFiles[0].text).toString('base64'));}catch(e){console.error(e.message);process.exit(1);}
 const a=globalThis.sceneUnderTest;assert(a);let meshes=0,triangles=0;
 a.scene.traverse(o=>{if(!o.isMesh)return;assert(o.geometry,'Missing merged geometry');const p=o.geometry.getAttribute('position');assert(p&&p.count>0);const arr=p.array;assert([...arr].every(Number.isFinite));triangles+=(o.geometry.index?.count||p.count)/3;meshes++;});
-assert.equal(a.ambientGuests.length,2);assert(meshes>5);assert(triangles<45000,'Geometry budget exceeded');console.log(`PASS scene construction: ${meshes} mesh objects before runtime batching, ${triangles} triangles, two ambient actors`);
+assert.equal(a.gala.stats.actors,6);assert.equal(a.thief.root,a.hero);assert(a.thief.stats.tailRings>10);assert(meshes>5);assert(triangles<45000,'Geometry budget exceeded: '+triangles);console.log(`PASS scene construction: ${meshes} mesh objects, ${triangles} triangles, six gala actors and articulated thief`);
