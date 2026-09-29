@@ -47,7 +47,7 @@ function plant(x,y,z,s=1){
    for(const side of [-1,1]){const leaf=mesh(leafGeo,i%2?'green':'leaf',xx+Math.cos(a)*side*.12*s,yy,zz-Math.sin(a)*side*.12*s,.20*s*(1-t*.4),.035*s,.075*s);leaf.rotation.y=a+side*.32;leaf.rotation.z=side*.25;}}
  }
 }
-for(const a of [[12.8,4.4,3],[-15.3,4.4,-4],[10,4.4,-2],[-5,4.4,-12],[10,4.4,-12],[-12.5,4.4,-11],[14,4.4,10],[-15.3,0,11]])plant(...a,1.3);
+for(const a of [[12.8,4.4,3],[-15.3,4.4,-4],[11.2,4.4,-1.1],[-5,4.4,-12],[10,4.4,-12],[-12.5,4.4,-11],[14,4.4,10],[-15.3,0,11]])plant(...a,1.3);
 // Botanical court and sculptural tree; furniture is visual-only in this study.
 cyl('stone',0,.22,2,2.1,.44);cyl('green',0,.45,2,1.85,.12);rod([0,.5,2],[.2,3.3,2],.18,'bark');for(let i=0;i<7;i++){let a=i*2.4;const x=Math.cos(a)*(i%2?1.3:.8),z=2+Math.sin(a)*1.2;rod([.1,2,2],[x,3.1+i*.14,z],.07,'bark');ball(i%2?'leaf':'green',x,3.1+i*.14,z,.9,.55,.9);}
 // Static crowd silhouettes at readable human scale, intentionally not AI NPCs.

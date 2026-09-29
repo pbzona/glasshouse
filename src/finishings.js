@@ -19,7 +19,7 @@ export function applyMuseumFinishings({T,scene,mats,cube,ball,cyl,rod,platforms}
  panel('EXTRACTION ANCHOR','OPTIONAL · PREPARE WITH E',1,9.8,-12.65,2,.65);rod([1,8.8,-12.69],[1,10.15,-12.69],.045,'brass');
  panel('GALA ENTRANCE','EXIT TO THE STREET',7,2.35,12.06,1.9,.55,Math.PI);
  panel('PRIVATE VIEW','ARCHIVE CURATOR',-8.0,.98,9,1.1,.42,Math.PI/2);cyl('brass',-7.99,.43,9,.045,.86);
- panel('PUBLIC REFUGE','SECURITY ACTIVE BEYOND INLAY',9.65,5.52,-.3,2,.62);rod([9.65,4.4,-.34],[9.65,5.87,-.34],.04,'brass');
+ panel('PUBLIC REFUGE','PATROLS BEYOND THE INLAY',9.65,5.36,-.3,1.35,.48);rod([9.65,4.4,-.34],[9.65,5.63,-.34],.035,'brass');
  panel('FERN / STUDY 01','',12.01,5.6,-5,1.05,1.3,-Math.PI/2,true);
  panel('FERN / STUDY 02','',12.01,5.6,-8,1.05,1.3,-Math.PI/2,true);
  panel('FROND / ARCHIVE','',8.395,5.5,-7.2,1,1.15,-Math.PI/2,true);
@@ -37,7 +37,7 @@ export function applyMuseumFinishings({T,scene,mats,cube,ball,cyl,rod,platforms}
  function pool(x,y,z,r,core=.82){const geo=new T.CircleGeometry(r,24),pos=geo.getAttribute('position'),colors=new Float32Array(pos.count*3),center=new T.Color('#ead3a1'),edge=new T.Color('#c0b18e');for(let i=0;i<pos.count;i++){const v=Math.min(1,Math.hypot(pos.getX(i),pos.getY(i))/r),c=edge.clone().lerp(center,(1-v)*core);colors.set([c.r,c.g,c.b],i*3);}geo.setAttribute('color',new T.BufferAttribute(colors,3));const m=new T.Mesh(geo,new T.MeshBasicMaterial({vertexColors:true}));m.rotation.x=-Math.PI/2;m.position.set(x,y+.011,z);m.userData.preserveVertexColor=true;scene.add(m);}
  pool(3,4.4,-7.9,1.6);pool(-8,0,9,1.8,.48);pool(7,4.4,-2,1.25,.44);
  function lamp(x,y,z){cube('brass',x,y-.17,z,.09,.34,.1);cube('lamp',x,y+.1,z,.19,.28,.16);cube('brass',x,y+.28,z,.3,.06,.24);}
- for(const [x,y,z]of [[-11.5,2.8,10.7],[12.0,6.13,-5],[12.0,6.13,-8],[2,6.45,-14.25],[7,6.45,-14.25]])lamp(x,y,z);
+ for(const [x,y,z]of [[-11.5,2.8,10.7],[12.0,6.57,-5],[12.0,6.57,-8],[2,6.45,-14.25],[7,6.45,-14.25]])lamp(x,y,z);
  // Ground every marker on its actual authored surface. Gold = prize; green = optional roof.
  const main=[[7,10],[7,7.7],[7,5.2],[7,2.8],[7,0],[10,-2],[10,-5],[10,-8],[8,-9],[6.9,-9]];
  for(const [x,z]of main){const hint=z>1?(10-z)/8*4.4:4.4,y=surfaceForInlay(platforms,x,z,hint);if(y!==null)cyl('gold',x,y+.022,z,.085,.025);}

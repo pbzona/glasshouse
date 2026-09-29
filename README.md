@@ -98,6 +98,6 @@ npm run build:vercel
 
 This is not final art or a polished chapter. Most guests are static; two have restrained gestures and the curator has readable look/read poses. Guards investigate on authored surfaces rather than performing full navigation/pursuit, and decorative props are not all collidable. There are no mobile controls, gamepad support, persistent saves, or production soundtrack.
 
-Rendering remains a known issue. A same-session pre-pass baseline at 1280×1280 and 50% render scale measured 24.1–25.1 fps. Remote-browser samples vary across sessions and are not a guaranteed hardware rate. The presentation pass must be compared at matching settings, not treated as a claim of 60 fps.
+Rendering remains a known issue. At a matching 1280×1280 viewport, 50% render scale and initial position, three pre-pass samples measured 24.1–25.1 fps and three post-pass samples measured 24.1–26.0 fps. Visible draw calls fell from 57 to 51 at that position. No material regression was observed in those samples, but this is not a 60 fps claim or a guaranteed hardware rate. The new live build also passed a covered-gallery check and a pickpocket → service roof → theft → roof escape run with zero captures and zero scrambler uses.
 
 Third-party license notices are retained under `licenses/`. No license for the original game code or assets has been assigned here.
