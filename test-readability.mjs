@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {PUBLIC_REFUGE,inPublicRefuge,surfaceForInlay,curatorCue,checkpointName,STATIC_GUESTS} from './src/readability.js';
+import {platforms} from './src/world.js';
+let n=0;const test=(name,f)=>{f();console.log('PASS '+name);n++;};
+test('refuge presentation matches the existing radius, height and mission phase',()=>{const h={phase:'prep'},p={x:7,y:4.4,z:-2};assert(inPublicRefuge(h,p));assert(!inPublicRefuge(h,{...p,x:8.4501}));assert(inPublicRefuge(h,{...p,x:8.44}));assert(!inPublicRefuge(h,{...p,y:4.76}));assert(!inPublicRefuge({phase:'escape'},p));assert.equal(PUBLIC_REFUGE.radius,1.45);});
+test('interactive curator is not duplicated in the decorative crowd',()=>{assert(!STATIC_GUESTS.some(([x,z])=>x===-9&&z===9));assert.equal(STATIC_GUESTS.length,11);});
+test('service inlays lie on authored steps rather than a floating slope',()=>{assert.equal(surfaceForInlay(platforms,-14,9,1.1),.8);assert.equal(surfaceForInlay(platforms,-14,4,3.9),3.6);assert.equal(surfaceForInlay(platforms,-14,1.7,4.4),4.4);assert.equal(surfaceForInlay(platforms,-14,11.5,0),0);});
+test('inlay lookup ignores gates, props, and disabled surfaces',()=>{const b=[{x:0,z:0,w:4,d:4,top:0,h:.4,kind:'floor'},{x:0,z:0,w:1,d:1,top:1,h:1,kind:'gate'},{x:0,z:0,w:1,d:1,top:.5,h:.2,kind:'stone',disabled:true}];assert.equal(surfaceForInlay(b,0,0,1),0);assert.equal(surfaceForInlay(b,9,9,1),null);});
+test('curator warning anticipates the existing mechanical cutoff without changing it',()=>{assert.equal(curatorCue({time:2}).reading,true);assert.equal(curatorCue({time:5}).warning,true);assert.equal(curatorCue({time:6}).reading,false);assert.equal(curatorCue({time:9}).remaining,1);assert.equal(curatorCue({time:10}).label,'READING · APPROACH BEHIND');});
+test('retry names distinguish entrance, terrace, elevated and stolen-prize recovery',()=>{assert.equal(checkpointName({x:-9,y:0,z:12}),'service entrance');assert.equal(checkpointName({x:7,y:4.4,z:-2}),'public terrace');assert.equal(checkpointName({x:1,y:8.8,z:-11}),'skylight anchor');assert.equal(checkpointName({x:14,y:4.4,z:10}),'east gallery');assert.equal(checkpointName({x:-4,y:8.8,z:1.5}),'scaffold crown');});
+console.log(`${n} readability tests passed`);

@@ -2,7 +2,7 @@
 
 An original browser-based museum heist platformer: an agile weasel, a crowded gala, optional preparation, and a prize worth climbing for.
 
-**Status:** early playable prototype, layout pass 0.4.0. The full recon–prepare–steal–escape loop is implemented. Art, animation, crowd behavior, and performance are still being refined.
+**Status:** early playable prototype, readability and atmosphere pass 0.5.0. The full recon–prepare–steal–escape loop is implemented. Art, animation, crowd behavior, and performance are still being refined.
 
 [Play the live build](https://glasshouse-silk.vercel.app)
 
@@ -35,6 +35,17 @@ Release E between different actions. Camera follow can be disabled in Pause. The
 Patrols build suspicion using sight cones, elevation and real line-of-sight blockers. The new inner arcade has physical screens and a safe waiting pocket; its approach was tested without visor use across six patrol phases. The service-floor route reaches the roof without crossing the artifact walkway.
 
 Q is no longer consequence-free: affected guards stop for 1.8 seconds, turn toward the last fault position, then investigate within their patrol surfaces for 7 seconds. Suspicion does not reset to zero. The case bypass remains 8 seconds with a 16-second recharge. Theft redirects east/north patrols toward the gallery and activates the front guard without sealing every exit. Retry preserves card, prep and loot; guards do not teleport on reaction or recovery.
+
+## Readability and atmosphere pass
+
+Warm ivory stone, burgundy panels and brass trim now carry muted botanical accents. Architectural plaques and framed botanical prints share one generated texture atlas; the museum is still statically batched and uses baked vertex colors. There are no dynamic shadows, bloom or volumetric lights. Controls, collider map, routes and mission mechanics are unchanged.
+
+- Forward sight fans and the existing 1.1 m close-awareness zone are clipped using the same eye heights and line-of-sight checks as detection. They update at 10 Hz and disappear while the player is protected or visors are disabled. This is a conservative sampled **same-floor slice**, not a pixel-perfect 3D frustum or a replacement for the actual detection check.
+- A brass inlay matches the existing public-refuge boundary on walkable floor; it becomes muted after theft.
+- The curator no longer overlaps a decorative guest. Their head/catalogue poses, text states and look-up warning make the unchanged reading cycle clearer.
+- Stair markers are snapped to real authored surfaces. Gold indicates the prize approach; green marks optional service/roof access.
+- Recovery names the destination and shows remaining grace seconds. Prep and loot retention rules are unchanged.
+- Two existing gala guests make small conversational gestures. There is no crowd simulation or moving collision.
 
 ## Development
 
@@ -74,15 +85,19 @@ npm run build:vercel
 - `src/heist.js` — pure mission state, guards, interactions, recovery
 - `src/controls.js` — movement vectors, camera-follow policy, ledge selection, context priority
 - `src/runtime.js` — input, camera, animation, HUD and mission integration
+- `src/finishings.js` — atlas signage, botanical panels, material details and grounded inlays
+- `src/readability.js` — refuge, marker, curator cue and checkpoint presentation helpers
+- `src/visibility.js` — reusable sampled visibility overlay buffers
 - `index.template.html` — shared base styles (its legacy body is not used by the build)
 - `heist.body.html`, `heist.extra.css` — current game interface
 - `build.mjs`, `build-vercel.mjs` — bundling and hosting output
 - `test-physics.mjs`, `test-heist.mjs`, `test-controls.mjs`, `test-layout.mjs` — traversal, 25 mission tests, 11 control tests and multi-phase stealth/layout regressions
+- `test-visibility.mjs`, `test-readability.mjs`, `test-scene.mjs` — 17 visibility checks, 6 readability checks and a headless geometry-construction budget smoke test
 
 ## Current limitations
 
-This is not final art or a polished chapter. Most guests are static; the curator has a timed look/read cycle. Guards investigate on authored surfaces rather than performing full navigation/pursuit, and decorative props are not all collidable. There are no mobile controls, gamepad support, persistent saves, or production soundtrack.
+This is not final art or a polished chapter. Most guests are static; two have restrained gestures and the curator has readable look/read poses. Guards investigate on authored surfaces rather than performing full navigation/pursuit, and decorative props are not all collidable. There are no mobile controls, gamepad support, persistent saves, or production soundtrack.
 
-Rendering remains a known issue. Earlier remote-browser samples were around 11–18 fps at reduced resolution; these are diagnostic observations, not a guaranteed rate on another device. The controls update does not claim to solve the separate rendering bottleneck.
+Rendering remains a known issue. A same-session pre-pass baseline at 1280×1280 and 50% render scale measured 24.1–25.1 fps. Remote-browser samples vary across sessions and are not a guaranteed hardware rate. The presentation pass must be compared at matching settings, not treated as a claim of 60 fps.
 
 Third-party license notices are retained under `licenses/`. No license for the original game code or assets has been assigned here.
