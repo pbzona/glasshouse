@@ -112,6 +112,6 @@ npm run build:vercel
 
 This is not final art or a polished chapter. Civilian life uses short authored loops rather than an unrestricted social simulation. The character remains a procedural rig, and the curator uses its existing timed opportunity. Guards investigate on authored surfaces rather than performing full navigation/pursuit, and decorative props are not all collidable. There are no mobile controls, gamepad support, persistent saves, or production soundtrack.
 
-Rendering remains a known issue. A same-session pre-pass baseline at the initial position, 1280×1280 viewport and 50% render scale was approximately 16–17 fps. It must be compared with this pass under matching conditions; measurements from other remote browser sessions are not hardware benchmarks or a 60 fps guarantee.
+Rendering remains a known issue. At the same initial position, 1280×1280 viewport and 50% render scale, the pre-pass samples were approximately 16.0–17.3 fps and post-pass samples 21.3–22.7 fps. No slowdown appeared in those samples, but shared remote-browser conditions vary: this is not proof of a universal speedup or a 60 fps guarantee. The integrated live build completed both a prepared, zero-disruption roof escape and an unprepared gallery/front escape with no captures. Pickpocket, stash and escape character states were observed, along with the server pausing its tray and nearby guests noticing the emptied case.
 
 Third-party license notices are retained under `licenses/`. No license for the original game code or assets has been assigned here.
